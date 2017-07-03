@@ -1,0 +1,25 @@
+{
+  "name": "akashic-atsumaru-template",
+  "version": "0.1.0",
+  "description": "",
+  "main": "lib/atasumaru.js",
+  "scripts": {
+    "build": "browserify init.js -o lib/atsumaru.js",
+    "prepublish": "npm run build"
+  },
+  "bin": {
+    "akashic-atsumaru-template": "./bin/run"
+  },
+  "files": [
+    "lib",
+    "bin"
+  ],
+  "author": "t.tsugehara",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^14.4.0"
+  },
+  "dependencies": {
+    "akashic-atsumaru-plugin": "^0.1.0"
+  }
+}

@@ -1,0 +1,72 @@
+@charset "UTF-8";
+/* CSS Document */
+
+* {
+	margin: 0;
+	border: 0;
+	padding: 0;
+}
+
+body{
+	overflow: hidden;
+    background: #000;
+}
+
+#container canvas{
+	background-size: contain;
+}
+
+@media screen and (max-device-width: 1023px){
+	/* Smartphone 横持ち */
+	html{
+		width:480px;
+		/*margin:0 auto;*/
+	}
+	body{
+		background-color:#000;
+		width:480px;
+		/*margin:0 auto;*/
+	}
+}
+
+/* サイドボタン初期設定 */
+
+#side_btn{
+	position:absolute;
+	top:0px;
+	right:0px;
+	width:46px;
+	height:260px;
+}
+
+#btn_save{
+	width:46px;
+	height:130px;
+	margin-left:50px;
+	background-color:transparent;
+	background-image:url(../page/save_btn.png);
+}
+
+#btn_load{
+	width:46px;
+	height:130px;
+	margin-left:80px;
+	background-color:transparent;
+	background-image:url(../page/load_btn.png);
+}
+
+#btn_save:hover{
+	background-image:url(../page/save_btn_on.png);
+}
+
+#btn_load:hover{
+	background-image:url(../page/load_btn_on.png);
+}
+
+#btn_save:focus {
+	outline:none;
+}
+
+#btn_load:focus{
+	outline:none;
+}
