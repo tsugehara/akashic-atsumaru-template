@@ -57,10 +57,6 @@ module.exports = function() {
 	}
 	function copyDirectory(src, dist) {
 		return new Promise((resolve, reject) => {
-			console.log("=---------------");
-			console.log(src);
-			console.log(dist);
-			console.log("=---------------");
 			fs.readdir(src, (err, files) => {
 				Promise.all(files.map((f) => copyFile(path.join(src, f), path.join(dist, f))))
 					.then(resolve)
@@ -83,8 +79,7 @@ module.exports = function() {
 	var basePath = "html";
 	var htmlFile = path.join(basePath, "index.html");
 
-	createDirectory(path.join(process.cwd(), "html", "img"))
-		.then(createDirectory(path.join(process.cwd(), "html", "page")))
+	createDirectory(path.join(process.cwd(), "html", "page"))
 		.then(copyDirectory(path.join(__dirname, "template", "page"), path.join(process.cwd(), "html", "page")))
 		.then(copyDirectory(path.join(__dirname, "template", "css"), path.join(process.cwd(), "html", "css")))
 		.then(copyFile(path.join(__dirname, "template", "index.html"), path.join(process.cwd(), "html", "index.html")))

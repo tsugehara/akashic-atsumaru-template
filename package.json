@@ -1,18 +1,19 @@
 {
   "name": "akashic-atsumaru-template",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "",
   "main": "lib/atasumaru.js",
   "scripts": {
-    "build": "browserify init.js -o lib/atsumaru.js",
+    "build": "browserify init.js -o template/js/atsumaru.js",
     "prepublish": "npm run build"
   },
   "bin": {
     "akashic-atsumaru-template": "./bin/run"
   },
   "files": [
-    "lib",
-    "bin"
+    "template",
+    "bin",
+    "rewrite.js"
   ],
   "author": "t.tsugehara",
   "license": "MIT",
