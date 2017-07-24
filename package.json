@@ -21,6 +21,6 @@
     "browserify": "^14.4.0"
   },
   "dependencies": {
-    "akashic-atsumaru-plugin": "^0.1.0"
+    "akashic-atsumaru-plugin": "^0.1.1"
   }
 }
