@@ -1,6 +1,7 @@
 module.exports = function() {
 	var fs = require("fs");
 	var path = require("path");
+	var htmlParser = require("htmlparser2");
 
 	function readFile(path) {
 		return new Promise((resolve, reject) => {
@@ -35,8 +36,44 @@ module.exports = function() {
 	}
 	function rewriteHtml(path, scripts) {
 		return new Promise((resolve, reject) => {
-			console.log("rewrite!!");
-			resolve(scripts);
+			fs.readFile(path, {encoding: "utf8"}, function(err, data) {
+				if (err) {
+					reject(err);
+					return;
+				}
+				var end = -1;
+				var thisTag = false;
+				var parser = new htmlParser.Parser({
+					onopentag: function(name, attr) {
+						if (name === "div" && attr.id === "container") {
+							thisTag = true;
+						}
+					},
+					onclosetag: function(name) {
+						if (thisTag) {
+							thisTag = false;
+							end = parser.endIndex + 1;
+						}
+					},
+					onend: function() {
+						if (end === -1) {
+							reject(new Error("can not find sandbox.js"));
+							return;
+						}
+						console.log(typeof data);
+						var html = data.substr(0, end) + "\n" + scripts.join("\n") + data.substr(end);
+						fs.writeFile(path, html, {encoding: "utf8"}, function(err2) {
+							if (err2) {
+								reject(err2);
+								return;
+							}
+							resolve();
+						});
+					}
+				});
+				parser.write(data);
+				parser.end();
+			});
 		});
 	}
 	function copyFile(src, dist) {
@@ -78,12 +115,21 @@ module.exports = function() {
 	}
 	var basePath = "html";
 	var htmlFile = path.join(basePath, "index.html");
+	var insertCodes = [
+		"<script src=\"./js/atsumaru.js\"></script>",
+		"<script src=\"./page/jquery-1.11.3.min.js\"></script>",
+		"<script src=\"./page/animation.js\"></script>",
+		"<div id=\"side_btn\">",
+		"<input type=\"button\" value=\"\" id=\"btn_save\"/>",
+		"<input type=\"button\" value=\"\" id=\"btn_load\"/>",
+		"</div>"
+	];
 
 	createDirectory(path.join(process.cwd(), "html", "page"))
 		.then(copyDirectory(path.join(__dirname, "template", "page"), path.join(process.cwd(), "html", "page")))
 		.then(copyDirectory(path.join(__dirname, "template", "css"), path.join(process.cwd(), "html", "css")))
-		.then(copyFile(path.join(__dirname, "template", "index.html"), path.join(process.cwd(), "html", "index.html")))
 		.then(copyDirectory(path.join(__dirname, "template", "js"), path.join(process.cwd(), "html", "js")))
+		.then(rewriteHtml(path.join(process.cwd(), "html", "index.html"), insertCodes))
 		.then(() => {
 			console.log("finished");
 		});
