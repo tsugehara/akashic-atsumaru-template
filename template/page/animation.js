@@ -46,18 +46,18 @@ $(document).ready(function(){
 	$('#playstop').click(function(){
 		if(playstop_flag===0){
 			$('#playstop').css('background-image','url(page/btn_stop_on.png)');
-			$('#seek_blue').css('background-image','url(page/bar_play.gif)');
+			$('#seek_blue').css('animation-iteration-count','infinite');
 			playstop_flag =1;
 		}
 		else{
 			$('#playstop').css('background-image','url(page/btn_play_on.png)');
-			$('#seek_blue').css('background-image','url(page/bar_stop.gif)');
+			$('#seek_blue').css('animation-iteration-count','0');
 			playstop_flag =0;
 		}
 	});
 });
 
-var speed_flag = 3;
+var speed_flag = 5;
 $(document).ready(function(){
 	$('#speed').hover(function() {
 		$(this).css('filter','grayscale(0%) brightness(100%)');},
@@ -65,17 +65,20 @@ $(document).ready(function(){
 	});
 	
 	$('#speed').click(function(){
-		if(speed_flag===5){
+		if(speed_flag===20){
 			$('#speed').css('background-image','url(page/speed1_on.png)');
+			$('#seek_blue').css('animation-duration','0.8s');
 			speed_flag =1;
 		}
-		else if(speed_flag===3){
-			$('#speed').css('background-image','url(page/speed5_on.png)');
-			speed_flag =5;
+		else if(speed_flag===5){
+			$('#speed').css('background-image','url(page/speed20_on.png)');
+			$('#seek_blue').css('animation-duration','0.1s');
+			speed_flag =20;
 		}
 		else{
-			$('#speed').css('background-image','url(page/speed3_on.png)');
-			speed_flag =3;
+			$('#speed').css('background-image','url(page/speed5_on.png)');
+			$('#seek_blue').css('animation-duration','0.3s');
+			speed_flag =5;
 		}
 	});
 });
