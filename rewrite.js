@@ -133,7 +133,7 @@ module.exports = function() {
 		'	<div class="seek_end"></div>',
 		'	<div class="seek_back">',
 		'		<div id="seek_blue"></div>',
-		'		<div class="seek_white"></div>',
+		'		<div id="seek_white"></div>',
 		'	</div>',
 		'</div>'
 	];

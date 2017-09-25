@@ -22,17 +22,40 @@ $(document).ready(function(){
 
 //シークバーの長さ※0～580px
 function seek_width(percent){
-    var seek_width;
-    seek_width = 5.8*percent;
+	var seek_width;
+	seek_width = 5.8*percent;
 	if(seek_width > 580){seek_width=580;}
 	return seek_width;
 }
 //スライダーの位置（シークバーの長さに合わせて)※197～777px
 
 //↓↓seek_width()にバーの位置の割合％を入力↓↓
+function seek_to(percent) {
+	$('#seek_blue').css('width', seek_width(percent));
+	$('#slyder').css('left', seek_width(percent)+197);
+}
+
+function set_time(time, duration) {
+	function padZero(n, len) {
+		var s = n.toString();
+		while (s.length < len)
+			s = "0" + s;
+		return s;
+	}
+	function format(t) {
+		var secs = Math.floor(t / 1000);
+		var s = secs % 60;
+		var mins = (secs - s) / 60;
+		var m = mins % 60;
+		var h = (mins - m) / 60;
+		return h + ':' + padZero(m, 2) + ':' + padZero(s, 2);
+	}
+	$('.timewindow').text(format(time) + " / " + format(duration));
+	seek_to(100 * time / duration);
+}
+
 $(window).load(function() {
-	$('#seek_blue').css('width', seek_width(100));
-	$('#slyder').css('left', seek_width(100)+197);
+	seek_to(100);
 });
 
 //シークバーメニュー
@@ -57,7 +80,7 @@ $(document).ready(function(){
 	});
 });
 
-var speed_flag = 5;
+var speed_flag = 1;
 $(document).ready(function(){
 	$('#speed').hover(function() {
 		$(this).css('filter','grayscale(0%) brightness(100%)');},
