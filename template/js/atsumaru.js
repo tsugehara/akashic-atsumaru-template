@@ -244,15 +244,14 @@ proto.switchToActive = function (callback) {
 };
 
 proto._updatePlaybackRate = function () {
-	// if (this._isActive) {
-	// 	this._driver._gameLoop.setLoopConfiguration({ playbackRate: this._playbackRate });
-	// 	this._timeKeeper.setRate(1);
-	// } else {
-	// 	this._driver._gameLoop.setLoopConfiguration({ playbackRate: 1 });
-	// 	this._timeKeeper.setRate(this._playbackRate);
-	// }
-	this._driver._gameLoop.setLoopConfiguration({ playbackRate: this._playbackRate });
-	this._timeKeeper.setRate(this._playbackRate);
+	if (this._isActive) {
+		this._driver._gameLoop.setLoopConfiguration({ playbackRate: this._playbackRate });
+		this._timeKeeper.setRate(1);
+	} else {
+		this._driver._gameLoop.setLoopConfiguration({ playbackRate: 1 });
+		this._timeKeeper.setRate(this._playbackRate);
+	}
+
 	// TODO: viewとくっついててきもい
 	if(this._playbackRate === 20){
 		$('#speed').css('background-image','url(page/speed20_on.png)');
