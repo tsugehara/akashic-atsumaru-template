@@ -38,9 +38,17 @@ window.addEventListener("load", function() {
 			});
 			speed.addEventListener("click", function () {
 				// Ugh! animation.js の speed_flag 更新を待つ setTimeout(). ちゃんと animation.js と統合すべき。
-				setTimeout(function () {
-					playbackController.setPlaybackRate(speed_flag);
-				}, 20);
+				switch (playbackController._playbackRate) {
+					case 1:
+						playbackController.setPlaybackRate(5);
+					break;
+					case 5:
+						playbackController.setPlaybackRate(20);
+					break;
+					case 20:
+						playbackController.setPlaybackRate(1);
+					break;
+				}
 			});
 		}
 
@@ -57,8 +65,6 @@ window.addEventListener("load", function() {
 			});
 		}
 
-		var debugOnMemoryDump = null;
-
 		// TODO: ちょっと不細工だけどいったんデバッグ用に
 		if (saveButton) {
 			saveButton.addEventListener("click", function() {
@@ -67,25 +73,24 @@ window.addEventListener("load", function() {
 				} else {
 					// ただのデバッグ用
 					console.log("save playlog", amflow.dump());
-					debugOnMemoryDump = JSON.stringify(amflow.dump());
+					window.localStorage.setItem("save", JSON.stringify(amflow.dump()));
 				}
 			});
 		}
 		if (loadButton) {
 			loadButton.addEventListener("click", function() {
-				if (window.RPGAtsumaru || debugOnMemoryDump) {
-					var p = window.RPGAtsumaru ? game.external.atsumaru.storage.load("1") : Promise.resolve(debugOnMemoryDump);
-					p.then(function (value) {
-						var playlog = JSON.parse(value);
-						amflow._tickList = playlog.tickList;  // Ugh! 非公開の値を直接書き換えている暫定処理
-						amflow._startPoints = playlog.startPoints;
-						playbackController.setTime(0);
-						playbackController.switchToReplay(function (e) { if (e) console.log(e); });
-					});
-				} else {
-					// ただのデバッグ用
-					console.log("load playlog");
+				function loadLocalStorage() {
+					return Promise.resolve(window.localStorage.getItem("save"));
 				}
+				var p = (window.RPGAtsumaru) ? game.external.atsumaru.storage.load("1") : loadLocalStorage();
+				p.then(function (value) {
+					var playlog = JSON.parse(value);
+					amflow._tickList = playlog.tickList;  // Ugh! 非公開の値を直接書き換えている暫定処理
+					amflow._startPoints = playlog.startPoints;
+					playbackController.setTime(0);
+					playbackController.resetDuration(playlog.tickList); 
+					playbackController.switchToReplay(function (e) { if (e) console.log(e); });
+				});
 			});
 		}
 

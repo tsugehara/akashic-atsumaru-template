@@ -1,6 +1,3 @@
-
-<!-- jQueryアニメーション -->
-
 //読み込み時のアニメ
 $(window).load(function() {
 	$('#btn_save').animate({'marginLeft': '-10px'},500).animate({'marginLeft': '5px'},300).animate({'marginLeft': '0px'},200),'swing';
@@ -85,23 +82,5 @@ $(document).ready(function(){
 	$('#speed').hover(function() {
 		$(this).css('filter','grayscale(0%) brightness(100%)');},
 		function(){$(this).css('filter','grayscale(100%) brightness(500%)');
-	});
-	
-	$('#speed').click(function(){
-		if(speed_flag===20){
-			$('#speed').css('background-image','url(page/speed1_on.png)');
-			$('#seek_blue').css('animation-duration','0.8s');
-			speed_flag =1;
-		}
-		else if(speed_flag===5){
-			$('#speed').css('background-image','url(page/speed20_on.png)');
-			$('#seek_blue').css('animation-duration','0.1s');
-			speed_flag =20;
-		}
-		else{
-			$('#speed').css('background-image','url(page/speed5_on.png)');
-			$('#seek_blue').css('animation-duration','0.3s');
-			speed_flag =5;
-		}
 	});
 });
