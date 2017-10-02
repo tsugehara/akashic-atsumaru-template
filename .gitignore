@@ -6,7 +6,6 @@ npm-debug.log
 spec/helpers/*.js
 coverage
 junitresults.xml
-lib
 tmp
 .idea
 doc/html

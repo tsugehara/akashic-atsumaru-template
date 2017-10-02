@@ -122,7 +122,20 @@ module.exports = function() {
 		"<div id=\"side_btn\">",
 		"<input type=\"button\" value=\"\" id=\"btn_save\"/>",
 		"<input type=\"button\" value=\"\" id=\"btn_load\"/>",
-		"</div>"
+		"</div>",
+		'<div id="seekbar">',
+		'	<div class="seek_menu">',
+		'		<input type="button" value="" id="playstop"/>',
+		'		<input type="button" value="" id="speed"/>',
+		'		<div class="timewindow">0:00:00 / 0:00:00</div>',
+		'	</div>',
+		'	<div id="slyder"></div>',
+		'	<div class="seek_end"></div>',
+		'	<div class="seek_back">',
+		'		<div id="seek_blue"></div>',
+		'		<div id="seek_white"></div>',
+		'	</div>',
+		'</div>'
 	];
 
 	createDirectory(path.join(process.cwd(), "html", "page"))
